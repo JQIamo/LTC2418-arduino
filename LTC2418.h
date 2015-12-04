@@ -21,8 +21,8 @@
 
 #include "Arduino.h"
 
-#ifndef LTC2481_h
-#define LTC2481_h
+#ifndef LTC2418_h
+#define LTC2418_h
 
 // from LTC2481 datasheet: http://cds.linear.com/docs/en/datasheet/2481fd.pdf
 
@@ -57,7 +57,7 @@
 #define FAST 0b00000001 // fast output rate with no autozero
 
 
-class LTC2481 {
+class LTC2418 {
 
 
 };
