@@ -24,41 +24,30 @@
 #ifndef LTC2418_h
 #define LTC2418_h
 
-// from LTC2481 datasheet: http://cds.linear.com/docs/en/datasheet/2481fd.pdf
+#define CCH0 0b10000
+#define CCH1 0b11000
+#define CCH2 0b10001
+#define CCH3 0b11001
+#define CCH4 0b10010
+#define CCH5 0b11010
+#define CCH6 0b10011
+#define CCH7 0b11011
+// other channels could be defined too...
 
-// Useful defines for the LTC2481 and LTC2485 - OR them together to make the
-// 8 bit config word.
-#define READ 0x01               // bitwise OR with address for read or write
-#define WRITE 0x00
-#define LTC248XADDR 0b01001000  // The one and only LTC248X in this circuit,
-                                // with both address lines floating.
- 
-// Select gain - 1 to 256 (also depends on speed setting)
-#define GAIN1 0b00000000 // G = 1 (SPD = 0), G = 1 (SPD = 1)
-#define GAIN2 0b00100000 // G = 4 (SPD = 0), G = 2 (SPD = 1)
-#define GAIN3 0b01000000 // G = 8 (SPD = 0), G = 4 (SPD = 1)
-#define GAIN4 0b01100000 // G = 16 (SPD = 0), G = 8 (SPD = 1)
-#define GAIN5 0b10000000 // G = 32 (SPD = 0), G = 16 (SPD = 1)
-#define GAIN6 0b10100000 // G = 64 (SPD = 0), G = 32 (SPD = 1)
-#define GAIN7 0b11000000 // G = 128 (SPD = 0), G = 64 (SPD = 1)
-#define GAIN8 0b11100000 // G = 256 (SPD = 0), G = 128 (SPD = 1)
+enum dac_ch_t { CH0, CH1, CH2, CH3, CH4, CH5, CH6, CH7 };
 
-// Select ADC source - differential input or PTAT circuit
-#define VIN 0b00000000
-#define PTAT 0b00001000
-
-// Select rejection frequency - 50, 55, or 60Hz
-#define R50 0b00000010
-#define R55 0b00000000
-#define R60 0b00000100
-
-// Speed settings is bit 7 in the 2nd byte
-#define SLOW 0b00000000 // slow output rate with autozero
-#define FAST 0b00000001 // fast output rate with no autozero
+// use, eg, 0x80 | UPDATE | CH0 to update next reading to CH0 (single ended)
+#define UPDATE 0b00100000
 
 
 class LTC2418 {
 
+uint32_t read(dac_ch_t ch);
+uint32_t read_update(dac_ch_t ch_next);
+
+private:
+    int _current_channel;
+    
 
 };
 
